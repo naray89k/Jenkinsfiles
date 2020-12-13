@@ -29,6 +29,7 @@ properties([parameters(pms)])
 
 node('master') {
     stage("build") {
+        echo "Test Message: Vaanadhi"
         buildApp(params.VERSION)
     }
     stage("test"){
