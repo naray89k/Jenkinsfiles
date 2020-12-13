@@ -1,0 +1,18 @@
+node('master') {
+    stage("clone") {
+        echo "cloning github repository"
+        git(
+                url: 'https://github.com/naray89k/Python.git',
+                credentialsId: 'github_naray89k',
+                branch: "master"
+        )
+        sh "ls -lart ./*"
+    }
+    stage("test"){
+        echo "Switching to Python directory"
+        sh "cd Python"
+        echo "running prime generation script"
+        sh "python prime_generation.py"
+    }
+}
+
