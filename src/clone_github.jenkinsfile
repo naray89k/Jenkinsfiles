@@ -6,11 +6,9 @@ node('master') {
                 credentialsId: 'github_naray89k',
                 branch: "master"
         )
-        sh "ls -lart ./*"
+        sh "ls -l"
     }
     stage("test"){
-        echo "Switching to Python directory"
-        sh "cd Python"
         echo "running prime generation script"
         sh "python prime_generation.py"
     }
