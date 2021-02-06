@@ -1,0 +1,31 @@
+
+pipeline {
+    agent any
+    parameters {
+    }
+    environment {
+        ENVIRONMENT = 'TEST'
+    }
+    stages {
+        stage("git clone") {
+            steps {
+                deleteDir()
+                git branch: master, credentialsId: github 
+                script {
+                    sh '''cd complete && gradle test'''
+                }
+            }
+        }
+    }
+    post {
+        always{
+            sh "env > env.txt"  
+            emailext body: '''${SCRIPT, template="groovy-html.template"}''',
+                mimeType: 'text/html',
+                attachmentsPattern: '*.ext'
+                subject: "{env.JOBNAME} -- Build # ${env.BUILD_NUMBER}",
+                to: "${mailRecipients}",
+                replyTo: "${mailRecipients}",
+        }
+    }
+}
