@@ -10,7 +10,7 @@ pipeline {
         stage("git clone") {
             steps {
                 deleteDir()
-                git branch: master, credentialsId: github 
+                git branch: master, credentialsId: github https://github.com/naray89k/Gradle.git
                 script {
                     sh '''cd complete && gradle test'''
                 }
